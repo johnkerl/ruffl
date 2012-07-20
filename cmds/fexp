@@ -1,0 +1,9 @@
+#!/usr/bin/ruby -Wall
+require 'F2_poly.rb'
+if ARGV.length >= 2
+	e = Integer(ARGV[-1])
+	ARGV.slice(0..-2).each{|f| puts F2_poly.new(f) ** e}
+else
+	$stderr.puts "Usage: #{$0} {a} [b ...] {e}"
+	exit 1
+end

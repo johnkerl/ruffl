@@ -1,0 +1,8 @@
+#!/usr/bin/ruby -Wall
+
+if ARGV.length == 2
+	puts Integer(ARGV[0]) % Integer(ARGV[1])
+else
+	$stderr.puts "Usage: #{$0} {a} {b}"
+	exit 1
+end

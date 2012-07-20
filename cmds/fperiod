@@ -1,0 +1,7 @@
+#!/usr/bin/ruby -Wall
+require 'Order.rb'
+if ARGV.length < 1
+	$stderr.puts "Usage: #{$0} {one or more polys in hex ...}"
+	exit 1
+end
+ARGV.each{|f| puts Order.F2_poly_period(f)}

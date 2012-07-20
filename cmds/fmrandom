@@ -1,0 +1,14 @@
+#!/usr/bin/ruby -Wall
+require 'F2_poly.rb'
+count = 1
+if ARGV.length == 1
+	m = F2_poly.new(ARGV[0])
+elsif ARGV.length == 2
+	m = F2_poly.new(ARGV[0])
+	count = Integer(ARGV[1])
+else
+	$stderr.puts "Usage: #{$0} {degree} [count]"
+	exit 1
+end
+degree = m.degree - 1
+(1..count).each{puts F2_poly.random(degree)}

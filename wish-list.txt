@@ -1,0 +1,26 @@
+-- wish list for the ruby implementation --
+
+o iw2009/berlekamp.tex -> spffl doc (maybe as xref to the next) & ffcomp
+
+----------------------------------------------------------------
+Important:
+  all done! :)
+
+Less important:
+  fmlog
+  fmconvert
+  ztestprime
+
+Matrix stuff:
+
+  f2matop
+  f2matrandom
+  f2vecop
+  f2matord
+
+  f2pmmatop
+  f2pmvecop
+  f2pmmatchpol
+  f2pmmatdable
+  f2pmmatord
+  f2pmmatrandom

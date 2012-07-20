@@ -1,0 +1,9 @@
+#!/usr/bin/ruby -Wall
+require 'Int_arith.rb'
+if ARGV.length < 1
+        $stderr.puts "Usage: #{$0} {one or more integers}"
+        exit 1
+end
+g = Integer(ARGV[0])
+ARGV.shift
+puts ARGV.inject(g) {|g, a| g = Int_arith.gcd(g, Integer(a)) }

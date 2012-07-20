@@ -1,0 +1,9 @@
+#!/usr/bin/ruby -Wall
+require 'Int_arith.rb'
+if ARGV.length < 1
+        $stderr.puts "Usage: #{$0} {one or more integers}"
+        exit 1
+end
+ell = Integer(ARGV[0])
+ARGV.shift
+puts ARGV.inject(ell) {|ell, a| ell = Int_arith.lcm(ell, Integer(a)) }

@@ -1,0 +1,28 @@
+#!/usr/bin/ruby -Wall
+require 'F2_poly_mod.rb'
+
+def usage
+	$stderr.puts "Usage: #{$0} {-a|-u} {m}"
+	exit 1
+end
+
+if ARGV.length != 2
+	usage
+end
+
+do_all = true
+if ARGV[0] == "-a"
+	do_all = true
+elsif ARGV[0] == "-u"
+	do_all = false
+else
+	usage
+end
+m = F2_poly.new(ARGV[1])
+max = (1 << m.degree) - 1
+
+if do_all
+	F2_poly_mod.elements_for_modulus(m).each{|a| puts a}
+else
+	F2_poly_mod.units_for_modulus(m).each{|a| puts a}
+end

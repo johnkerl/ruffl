@@ -1,0 +1,11 @@
+#!/usr/bin/ruby -Wall
+require 'Int_mod.rb'
+
+if ARGV.length >= 3
+	m = Integer(ARGV.shift)
+	e = Integer(ARGV[-1])
+	ARGV.slice(0..-2).each{|f| puts Int_mod.new(Integer(f), m) ** e}
+else
+	$stderr.puts "Usage: #{$0} {modulus} {a} [b ...] {e}"
+	exit 1
+end

@@ -1,0 +1,7 @@
+#!/usr/bin/ruby -Wall
+require 'F2_poly_factor.rb'
+if ARGV.length < 1
+	$stderr.puts "Usage: #{$0} {one or more degrees ...}"
+	exit 1
+end
+ARGV.each{|d| puts "#{d} #{F2_poly_factor.lowest_irr(Integer(d))}"}

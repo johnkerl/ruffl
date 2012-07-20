@@ -1,0 +1,9 @@
+#!/usr/bin/ruby -Wall
+require 'Order.rb'
+
+if ARGV.length < 2
+	$stderr.puts "Usage: #{$0} {modulus} {a b c ...}"
+	exit 1
+end
+m = Integer(ARGV.shift)
+ARGV.each{|a| puts Order.mod_order(Int_mod.new(Integer(a), m))}

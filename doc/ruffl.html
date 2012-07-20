@@ -1,0 +1,338 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="description"
+        content="A Ruby library for finite fields.">
+  <meta name="keywords" content="finite field, finite fields, source code,
+    Ruby, library">
+  <title>RUFFL</title>
+</head>
+
+<body bgcolor="#ffffff" link="#993333" vlink="#888888" alink="#cc3333">
+
+<h1> <h2> <font color="#993333">
+RUFFL
+</font> </h2> </h1>
+
+<!-- ================================================================ -->
+<p>
+
+<ul>
+<li><a href="#what"> <b>What is RUFFL?</b></a>
+<li><a href="#where"> <b>Where is RUFFL?</b></a>
+<li><a href="#why"> <b>Why RUFFL?</b></a>
+<li><a href="#examples"> <b>Examples</b></a>
+<li><a href="#status"> <b>Status</b></a>
+<li><a href="#availability"> <b>Availability</b></a>
+<li><a href="#summary_of_features"> <b>Summary of features</b></a>
+<li><a href="#features_in_detail"> <b>Features in detail</b></a>
+<li><a href="#see_also"> <b>See also</b></a>
+<li><a href="#contact"> <b>Contact information</b></a>
+</ul>
+
+<!-- ---------------------------------------------------------------- -->
+<p>
+<hr>
+<font color="#993333">
+<b>What is RUFFL?</b>
+</font>
+<a id="what">
+
+<p>RUFFL (pronounced <i>ruffle</i>) is a Ruby finite-field library for integers
+mod <i>p</i>, or polynomials with coefficients mod 2.  Integers may have
+arbitrary size and polynomials may have arbitrary degree, as limited by machine
+resources.
+
+<!-- ---------------------------------------------------------------- -->
+<p>
+<hr>
+<font color="#993333">
+<b>Where is RUFFL?</b>
+</font>
+
+<a id="where">
+
+<p>
+The source directory is <a href="..">http://johnkerl.org/ruby/ruffl/</a>.
+A tar file is located at
+<a href="../../ruffl.tgz">http://johnkerl.org/ruffl.tgz</a>.
+
+<!-- ---------------------------------------------------------------- -->
+<p>
+<hr>
+<font color="#993333">
+<b>Why RUFFL?</b>
+</font>
+<a id="why">
+
+<p>
+There are numerous other software packages for doing arithmetic over finite
+fields, e.g. Pari/GP, Shoup's NTL, Mathematica, etc.  Pluses and minuses of
+RUFFL are as follows:
+
+<ul>
+<p><li> My single most important reason for writing RUFFL was to learn by doing.
+    I encourage you to do the same.  Nonetheless, RUFFL is available on
+    an as-is basis for anyone who would like to learn from it.
+<p><li> RUFFL has I/O in a very compact format (examples are below).
+<p><li> Special cases are made for <i>p</i>=2.  This increases computation
+    speed, and also permits an even more compact, hexadecimal I/O format.
+<p><li> RUFFL aims for reasonable performance, but clarity of implementation is
+    just as important.  You will not find cutting-edge algorithms
+    implemented here.  RUFFL grew out of my desire for a simple desk
+    calculator (cf. the Unix <tt>bc</tt> command) which would support
+    finite-field arithmetic.  Its main purpose remains that of automating
+    simple computations.
+<p><li> Unlike Shoup's NTL, there is no global modulus:  each intmod or polymod
+    has its own modulus, leading to a more elegant user experience.
+<p><li> Unlike computer-algebra tools such as Mathematica, Maple, or GAP,
+    RUFFL is not monolithic, and does not have startup time measured
+    in seconds.  Thus, it permits shell scripting in which executables
+    are repeatedly invoked.
+<p><li> Since the source code is my own, I can make it run on any platform
+    I port it to, and I do not need to pay license fees.
+<p>This was a nice opportunity for me to teach myself some Ruby:  here I
+    am porting part of
+    <a href="http://johnkerl.org/src/spffl/doc/spffl.html">SPFFL</a> which I
+    wrote several years ago (circa 2004) in C++ with templates.
+<p><li> RUFFL is scriptable since it is written in Ruby.  There are also little
+    bash scripts in the <tt>cmds</tt> subdirectory which provide a command-line
+    interface to most routines.  You can code in Ruby, or you can write shell
+    scripts; in the latter case, looping, and file I/O are provided by the
+    shell.  (I make use of <tt>$(...)</tt> in bash, which nests much more
+    nicely than backticks.)  Some examples are shown below.
+
+</ul>
+
+<!-- ---------------------------------------------------------------- -->
+<p>
+<hr>
+<font color="#993333">
+<b>Examples</b>
+</font>
+<a id="examples">
+
+<p> Print a multiplication table for <b>F</b><sub>7</sub> using a Bash script:
+
+<pre>
+        #!/bin/sh
+        p=7
+        elements="$(fplist -a $p)"
+        for a in $elements; do
+                for b in $elements; do
+                        c=$(fp. $p $a $b)
+                        echo -n " $c"
+                done
+                echo ""
+        done
+</pre>
+
+    <p>Output:
+
+<pre>
+       0 0 0 0 0 0 0
+       0 1 2 3 4 5 6
+       0 2 4 6 1 3 5
+       0 3 6 2 5 1 4
+       0 4 1 5 2 6 3
+       0 5 3 1 6 4 2
+       0 6 5 4 3 2 1
+</pre>
+
+    <p>Ruby script file for the same:
+
+<pre>
+        #!/usr/bin/ruby -Wall
+        require 'Int_mod.rb'
+        elements = Int_mod.elements_for_modulus(7)
+        for a in elements
+            for b in elements
+                c = a * b
+                printf " #{c}"
+            end
+            printf "\n"
+        end
+</pre>
+
+<p>Division table for the 16-element field mod
+    <i>x</i><sup>4</sup> + <i>x</i> + 1:
+
+<pre>
+        #!/usr/bin/ruby -Wall
+        require 'F2_poly_mod.rb'
+        elements = F2_poly_mod.units_for_modulus(0x13)
+        for a in elements
+            for b in elements
+                c = a / b
+                printf " #{c}"
+            end
+            printf "\n"
+        end
+</pre>
+
+    <p>Output:
+
+<pre>
+         0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+         0 1 2 3 4 5 6 7 8 9 3 2 1 0 7 6
+         0 2 4 6 8 a c e 3 1 6 4 2 0 e c
+         0 3 6 5 c f a 9 b 8 5 6 3 0 9 a
+         0 4 8 c 3 7 b f 6 2 c 8 4 0 f b
+         0 5 a f 7 2 d 8 e b f a 5 0 8 d
+         0 6 c a b d 7 1 5 3 a c 6 0 1 7
+         0 7 e 9 f 8 1 6 d a 9 e 7 0 6 1
+         0 8 3 b 6 e 5 d c 4 b 3 8 0 d 5
+         0 9 1 8 2 b 3 a 4 d 8 1 9 0 a 3
+         0 3 6 5 c f a 9 b 8 5 6 3 0 9 a
+         0 2 4 6 8 a c e 3 1 6 4 2 0 e c
+         0 1 2 3 4 5 6 7 8 9 3 2 1 0 7 6
+         0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+         0 7 e 9 f 8 1 6 d a 9 e 7 0 6 1
+         0 6 c a b d 7 1 5 3 a c 6 0 1 7
+</pre>
+
+<p> Orders of units in the multiplicative group mod 13:
+<pre>
+        bash$ fpord 13 $(fplist -u 13)
+        1
+        12
+        3
+        6
+        4
+        12
+        12
+        4
+        3
+        6
+        12
+        2
+</pre>
+
+<p> Factorization of <i>x</i><sup>64</sup> - <i>x</i>:
+
+<pre>
+bash$ a=$( f- $(fexp 2 64) 2)
+
+bash$ ffactor $a
+10000000000000002 = 2 3 7 b d 43 49 57 5b 61 67 6d 73 75
+</pre>
+
+<!-- ---------------------------------------------------------------- -->
+<p>
+<hr>
+<font color="#993333">
+<b>Status</b>
+</font>
+<a id="status">
+
+<p>
+RUFFL is a work in progress, and will remain so for as long as I can think
+of algorithms to implement.  There is very little documentation.
+
+<!-- ---------------------------------------------------------------- -->
+<p>
+<hr>
+<font color="#993333">
+<b>Availability</b>
+</font>
+<a id="availability">
+
+<p> RUFFL is released under the terms of the GNU General Public License (GPL).
+Please see the file <tt>LICENSE.txt</tt> for more details.  Also please visit <a
+href="http://www.gnu.org">www.gnu.org</a>.
+
+<p> RUFFL has been run on Linux 2.6 and Ruby 1.8.7.
+
+<!-- ---------------------------------------------------------------- -->
+<p>
+<hr>
+<font color="#993333">
+<b>Summary of features</b>
+</font>
+<a id="summary_of_features">
+
+<p>
+Features include:
+
+<ul>
+<li> Arithmetic for integers and polynomial rings, and residue class
+    rings/fields.
+<li> Generation of random elements.
+<li> GCD, LCM, totient.
+<li> Irreducibility testing, factorization (Berlekamp).
+<li> Periods of polynomials (in port).
+<li> Printing of tables.
+<!--
+<li> Discrete log (Shanks) (in port).
+-->
+</ul>
+
+<!-- ---------------------------------------------------------------- -->
+<hr>
+<font color="#993333">
+<b>Features in detail</b>
+</font>
+<a id="features_in_detail">
+
+<p>
+<pre>
+
+Integers   Integers mod m  F2[x]       F2[x]/&lt;r(x)&gt;
+--------   --------------  -----       ---------------
+z+         zm+             f+          fm+
+z-         zm-             f-          fm-
+z.         zm.             f.          fm.
+zdiv       zmdiv           fdiv        fmdiv
+zmod       zmexp           fmod        fmexp
+zexp       zmrandom        fexp        fmrandom
+zfactorial zmfindgen       ftotient    fmfindgen
+zgcd       zmord           fgcd        fmord
+zegcd      zmlist          fegcd       fmlist
+zlcm       zmtbl           flcm        fmtbl
+zfactor                    fdeg
+ztotient                   ffactor
+zrandom                    frandom
+zdivisors                  ftestirr
+                           flowestirr
+                           frandomirr
+                           fperiod
+                           ftestprim
+                           fdivisors
+</pre>
+
+<!-- ---------------------------------------------------------------- -->
+<p>
+<hr>
+<font color="#993333">
+<b>See also</b>
+</font>
+<a id="see_also">
+
+<p>
+<ul>
+<li> <a href="http://johnkerl.org/doc/ffcomp.pdf">Computation in finite
+	fields</a>:  a document explaining finite-field arithmetic.
+<li> <a href="http://johnkerl.org/src/spffl/doc/spffl.html">SPFFL</a>:
+	C++ implementation, with more data types.
+</ul>
+
+<!-- ---------------------------------------------------------------- -->
+<p>
+<hr>
+<font color="#993333">
+<b>Contact information</b>
+</font>
+<a id="contact">
+
+<p> John Kerl
+<br><a href="http://johnkerl.org">johnkerl.org</a>
+<br> <a href="mailto:kerl.john.r@gmail.com">
+    kerl.john.r@gmail.com</a>
+
+<!-- ================================================================ -->
+<hr>
+<i> Last updated: 2011-02-16 </i>
+</body>
+</html>
+

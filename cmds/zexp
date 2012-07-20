@@ -1,0 +1,8 @@
+#!/usr/bin/ruby -Wall
+if ARGV.length >= 2
+	e = Integer(ARGV[-1])
+	ARGV.slice(0..-2).each{|n| puts Integer(n) ** e}
+else
+	$stderr.puts "Usage: #{$0} {a} [b ...] {e}"
+	exit 1
+end

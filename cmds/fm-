@@ -1,0 +1,13 @@
+#!/usr/bin/ruby -Wall
+require 'F2_poly_mod.rb'
+
+if ARGV.length == 2
+	m = F2_poly.new(ARGV[0])
+	puts -F2_poly_mod.new(ARGV[1], m)
+elsif ARGV.length == 3
+	m = F2_poly.new(ARGV[0])
+	puts F2_poly_mod.new(ARGV[1], m) - F2_poly_mod.new(ARGV[2], m)
+else
+	$stderr.puts "Usage: #{$0} {modulus} {a} {b} or #{$0} {a}"
+	exit 1
+end

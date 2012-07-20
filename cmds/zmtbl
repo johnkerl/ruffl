@@ -1,0 +1,48 @@
+#!/usr/bin/ruby -Wall
+require 'Int_mod.rb'
+
+def usage
+	$stderr.puts "Usage: #{$0} {p} {+|-|.|/}"
+	exit 1
+end
+
+if ARGV.length != 2
+	usage
+end
+m = Integer(ARGV[0])
+op = ARGV[1]
+
+if ['+', '-', '.' ].include? op
+	elts = Int_mod.elements_for_modulus(m)
+elsif ['/'].include? op
+	elts = Int_mod.units_for_modulus(m)
+end
+
+printf "#{op} | "
+for b in elts
+	printf " #{b}"
+end
+printf "\n"
+
+printf "- +"
+for b in elts
+	printf " -"
+end
+printf "\n"
+
+for a in elts
+	printf "#{a} | "
+	for b in elts
+		if op == '+'
+			c = a + b
+		elsif op == '-'
+			c = a - b
+		elsif op == '.'
+			c = a * b
+		else
+			c = a / b
+		end
+		printf " #{c}"
+	end
+	printf "\n"
+end

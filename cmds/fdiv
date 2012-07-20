@@ -1,0 +1,8 @@
+#!/usr/bin/ruby -Wall
+require 'F2_poly.rb'
+if ARGV.length == 2
+	puts F2_poly.new(ARGV[0]) / F2_poly.new(ARGV[1])
+else
+	$stderr.puts "Usage: #{$0} {a} {b}"
+	exit 1
+end

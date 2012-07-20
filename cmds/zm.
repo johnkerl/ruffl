@@ -1,0 +1,10 @@
+#!/usr/bin/ruby -Wall
+require 'Int_mod.rb'
+if ARGV.length < 1
+	$stderr.puts "Usage: #{$0} {m} {zero or more residues ...}"
+	exit 1
+end
+m = Integer(ARGV[0])
+ARGV.shift
+prod = Int_mod.new(1, m)
+puts ARGV.inject(prod) {|prod, a| prod *= Int_mod.new(Integer(a), m)}

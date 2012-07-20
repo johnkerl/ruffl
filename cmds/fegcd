@@ -1,0 +1,10 @@
+#!/usr/bin/ruby -Wall
+require 'F2_poly.rb'
+if ARGV.length != 2
+        $stderr.puts "Usage: #{$0} {m} {n}"
+        exit 1
+end
+m = F2_poly.new(ARGV[0])
+n = F2_poly.new(ARGV[1])
+g, s, t = m.ext_gcd(n)
+puts "#{g} = #{s} * #{m} + #{t} * #{n}"

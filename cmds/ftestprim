@@ -1,0 +1,8 @@
+#!/usr/bin/ruby -Wall
+require 'Order.rb'
+if ARGV.length < 1
+	$stderr.puts "Usage: #{$0} {one or more polys in hex ...}"
+	exit 1
+end
+labels = { true => "PRIMITIVE", false => "imprimitive" }
+ARGV.each{|f| puts "#{f} #{labels[Order.F2_poly_primitive?(F2_poly.new(f))]}"}

@@ -1,0 +1,10 @@
+#!/usr/bin/ruby -Wall
+require 'Int_arith.rb'
+if ARGV.length != 2
+        $stderr.puts "Usage: #{$0} {m} {n}"
+        exit 1
+end
+m = Integer(ARGV[0])
+n = Integer(ARGV[1])
+g, s, t = Int_arith.ext_gcd(m, n)
+puts "#{g} = #{s} * #{m} + #{t} * #{n}"

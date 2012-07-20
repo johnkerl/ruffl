@@ -1,0 +1,22 @@
+#!/bin/bash -e
+
+# ================================================================
+# This software is released under the terms of the GNU GPL.
+# Please see LICENSE.txt in the same directory as this file.
+# John Kerl
+# kerl.john.r@gmail.com
+# Copyright (c) 2011
+# ================================================================
+
+for ut in *_unit_test.rb; do
+	$ut
+done
+
+pushd cmds
+for ut in *_unit_test.rb; do
+	$ut
+done
+popd
+
+echo ''
+echo 'ALL TESTS PASSED'

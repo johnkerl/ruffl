@@ -1,0 +1,9 @@
+#!/usr/bin/ruby -Wall
+require 'F2_poly_mod.rb'
+if ARGV.length < 1
+	$stderr.puts "Usage: #{$0} {m} {zero or more residues ...}"
+	exit 1
+end
+m = F2_poly.new(ARGV.shift)
+sum = F2_poly_mod.new(0, m)
+puts ARGV.inject(sum) {|sum, a| sum += F2_poly_mod.new(a, m)}

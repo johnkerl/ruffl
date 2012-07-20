@@ -1,0 +1,8 @@
+#!/usr/bin/ruby -Wall
+require 'F2_poly_factor.rb'
+if ARGV.length < 1
+	$stderr.puts "Usage: #{$0} {one or more polys in hex ...}"
+	exit 1
+end
+labels = { true => "IRREDUCIBLE", false => "reducible" }
+ARGV.each{|f| puts "#{f} #{labels[F2_poly_factor.irr?(F2_poly.new(f))]}"}

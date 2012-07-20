@@ -1,0 +1,8 @@
+#!/usr/bin/ruby -Wall
+require 'Order.rb'
+
+if ARGV.length < 1
+	$stderr.puts "Usage: #{$0} {modulus} [more moduli ...]"
+	exit 1
+end
+ARGV.each{|m| puts Order.mod_max_order(F2_poly.new(m))}

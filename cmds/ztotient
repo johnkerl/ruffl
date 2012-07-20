@@ -1,0 +1,16 @@
+#!/usr/bin/ruby -Wall
+require 'Int_factor.rb'
+do_slow = false
+if ARGV.length >= 1 and ARGV[0] == "-slow"
+	do_slow = true
+	ARGV.shift
+end
+if ARGV.length < 1
+	$stderr.puts "Usage: #{$0} {one or more integers ...}"
+	exit 1
+end
+if do_slow
+	ARGV.each{|n| puts Int_factor.slow_totient(Integer(n))}
+else
+	ARGV.each{|n| puts Int_factor.totient(Integer(n))}
+end

@@ -1,0 +1,27 @@
+#!/usr/bin/ruby -Wall
+require 'F2_poly_factor.rb'
+
+do_maximal_proper = false
+if ARGV.length >= 1 and ARGV[0] == "-mp"
+	do_maximal_proper = true
+	ARGV.shift
+end
+if ARGV.length < 1
+	$stderr.puts "Usage: #{$0} [-mp] {one or more polys in hex ...}"
+	$stderr.puts "Use -mp to only list maximal proper divisors."
+	exit 1
+end
+ARGV.each do |arg|
+	printf "#{arg}:"
+	finfo = F2_poly_factor.factor(F2_poly.new(arg))
+	if do_maximal_proper
+		divisors = finfo.maximal_proper_divisors
+	else
+		divisors = finfo.all_divisors
+	end
+
+	divisors.each do |d|
+		printf " #{d}"
+	end
+	printf "\n"
+end

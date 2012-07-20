@@ -1,0 +1,9 @@
+#!/usr/bin/ruby -Wall
+require 'Order.rb'
+
+if ARGV.length < 2
+	$stderr.puts "Usage: #{$0} {modulus} {a b c ...}"
+	exit 1
+end
+m = F2_poly.new(ARGV.shift)
+ARGV.each{|a| puts Order.mod_order(F2_poly_mod.new(F2_poly.new(a), m))}

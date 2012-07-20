@@ -1,0 +1,11 @@
+#!/usr/bin/ruby -Wall
+require 'F2_poly_mod.rb'
+
+if ARGV.length >= 3
+	m = F2_poly.new(ARGV.shift)
+	e = Integer(ARGV[-1])
+	ARGV.slice(0..-2).each{|f| puts F2_poly_mod.new(f, m) ** e}
+else
+	$stderr.puts "Usage: #{$0} {modulus} {a} [b ...] {e}"
+	exit 1
+end

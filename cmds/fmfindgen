@@ -1,0 +1,17 @@
+#!/usr/bin/ruby -Wall
+require 'Order.rb'
+if ARGV.length < 1
+	$stderr.puts "Usage: #{$0} {one or more polys in hex ...}"
+	exit 1
+end
+rv = 0
+ARGV.each do |f|
+	g = Order.F2_poly_mod_generator(f)
+	if g.nil?
+		puts "No generator found."
+		rv = 1
+	else
+		puts g
+	end
+end
+exit rv

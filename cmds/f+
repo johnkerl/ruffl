@@ -1,0 +1,4 @@
+#!/usr/bin/ruby -Wall
+require 'F2_poly.rb'
+sum = F2_poly.new(0)
+puts ARGV.inject(sum) {|sum, a| sum += F2_poly.new(a)}

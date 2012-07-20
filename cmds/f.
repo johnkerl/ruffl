@@ -1,0 +1,4 @@
+#!/usr/bin/ruby -Wall
+require 'F2_poly.rb'
+prod = F2_poly.new(1)
+puts ARGV.inject(prod) {|prod, a| prod *= F2_poly.new(a)}

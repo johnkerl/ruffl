@@ -1,0 +1,7 @@
+#!/usr/bin/ruby -Wall
+require 'Int_factor.rb'
+if ARGV.length < 1
+	$stderr.puts "Usage: #{$0} {one or more integers ...}"
+	exit 1
+end
+ARGV.each{|n| puts "#{n} = #{Int_factor.factor(Integer(n))}"}

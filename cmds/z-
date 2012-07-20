@@ -1,0 +1,9 @@
+#!/usr/bin/ruby -Wall
+if ARGV.length == 1
+	puts -Integer(ARGV[0])
+elsif ARGV.length == 2
+	puts Integer(ARGV[0])-Integer(ARGV[1])
+else
+	$stderr.puts "Usage: #{$0} {a} {b} or #{$0} {a}"
+	exit 1
+end
