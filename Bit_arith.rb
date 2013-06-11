@@ -84,6 +84,23 @@ def Bit_arith.msb_pos(x)
 	end
 end
 
+def Bit_arith.msb(x)
+	shift_amount = 1
+	xshift = x >> shift_amount
+	while xshift > 0
+		x |= xshift
+		shift_amount <<= 1
+		xshift = x >> shift_amount
+	end
+    # x |= (x >> 1);
+    # x |= (x >> 2);
+    # x |= (x >> 4);
+    # x |= (x >> 8);
+    # x |= (x >> 16);
+	# ...
+    return(x & ~(x >> 1));
+end
+
 def Bit_arith.lsb(x)
 	x & -x
 end

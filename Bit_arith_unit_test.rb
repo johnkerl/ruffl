@@ -87,6 +87,27 @@ class Bit_arith_unit_test < Test::Unit::TestCase
 	end
 
 	# ----------------------------------------------------------------
+	def test_msb
+		assert_equal(0,          Bit_arith.msb(0x00000000))
+		assert_equal(1,          Bit_arith.msb(0x00000001))
+		assert_equal(2,          Bit_arith.msb(0x00000002))
+		assert_equal(2,          Bit_arith.msb(0x00000003))
+		assert_equal(4,          Bit_arith.msb(0x00000004))
+		assert_equal(0x80,       Bit_arith.msb(0x000000aa))
+		assert_equal(0x80,       Bit_arith.msb(0x000000ff))
+		assert_equal(0x8000,     Bit_arith.msb(0x0000beef))
+		assert_equal(0x80000000, Bit_arith.msb(0xdeadbeef))
+		assert_equal(0x100000000, Bit_arith.msb(0x1deadbeef))
+		assert_equal(0x800000000, Bit_arith.msb(0xdeadbeefe))
+
+		(1..400).each do |x|
+			v = 1 << x
+			assert_equal(v, Bit_arith.msb(v))
+			assert_equal(v>>1, Bit_arith.msb(v-1))
+		end
+	end
+
+	# ----------------------------------------------------------------
 	def test_lsb
 		assert_equal(0, Bit_arith.lsb(0x00000000))
 		assert_equal(1, Bit_arith.lsb(0x00000001))
