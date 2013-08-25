@@ -6,7 +6,6 @@
 # 2011-02-07
 # First Ruby module! :)
 # ================================================================
-# This software is released under the terms of the GNU GPL.
 # Please see LICENSE.txt in the same directory as this file.
 # Copyright (c) 2004
 # ================================================================
